@@ -12,9 +12,7 @@ from tkinter import *
 
 
 # everything that goes into the window
-def create_window():
-    # Creates window
-    window = Tk()
+def create_window(window):
 
     # titles window Minesweeper
     window.title("Minesweeper")
@@ -29,14 +27,28 @@ def create_window():
     hard_btn = Button(window, text="Hard", width=25, height=2).place(x=369, y=650)
 
     # lives label
-    lives_lbl = Label(window, text="Lives: ", font="Times 16 bold").place(x=5, y=610)
+    lives_lbl = Label(window, text="Lives: ", font="Times 16 bold", bg = "darkgray").place(x=20, y=604)
 
-    window.mainloop()
+def create_board(board):
+
+    # creates the background of the gameboard
+    board.create_rectangle(10, 10, 544, 641, outline = 'gray', fill = 'darkgray', width = 10)
+    board.create_rectangle(10, 590, 544, 600, outline = 'gray', fill = 'gray')
 
 
 def main():
-    create_window()
 
+    # creates window
+    window = Tk()
+
+    # creates space for objects to be placed on the window
+    board = Canvas(window, width=550, height=700)
+    board.pack()
+
+    create_window(window)
+    create_board(board)
+
+    window.mainloop()
 
 if __name__ == "__main__":
     main()
