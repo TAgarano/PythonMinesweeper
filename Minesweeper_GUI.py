@@ -26,8 +26,9 @@ def create_window(window):
     intermediate_btn = Button(window, text="Intermediate", width=25, height=2).place(x=185, y=650)
     hard_btn = Button(window, text="Hard", width=25, height=2).place(x=369, y=650)
 
-    # lives label
+    # lives labels
     lives_lbl = Label(window, text="Lives: ", font="Times 16 bold", bg="darkgray").place(x=20, y=604)
+    active_lives = Label(window, text="", font="Times 16 bold", bg="darkgray").place(x=78, y=604)
 
 
 def create_board(board):
