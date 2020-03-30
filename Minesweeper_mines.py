@@ -5,13 +5,15 @@
 
 import random as r
 field = [[0 for i in range(10)] for j in range(10)]
+num_mines = 15
 
 
+# used to place the mines
 def mines():
     global field
 
     i = 0
-    while i != 20:
+    while i != num_mines:
         x = r.randint(0, 9)
         y = r.randint(0, 9)
 
@@ -21,43 +23,54 @@ def mines():
             i += 1
 
 
-#FIXME: python <- java
+# increment numbers around mines
 def increment_neighbors():
-    for row in field.len:
-        for col in field[row].len:
+    global field
 
-            # To the right
-            if field[row + 1] < field.len and field[row][col + 1] != 9:
-                map[row][col + 1].incrementContents()
+    for row in range(len(field)):
+        for col in range(len(field[row])):
+            # mine
+            if field[row][col] == 9:
 
-            # Below the mine
-            if row + 1 < map.length and map[row + 1][col].getContents() != 9:
-                map[row + 1][col].incrementContents()
+                # To the right
+                if col + 1 < len(field) and field[row][col + 1] != 9:
+                    field[row][col + 1] += 1
 
-            # Above the mine
-            if row - 1 >= 0 and map[row - 1][col].getContents() != 9:
-                map[row - 1][col].incrementContents()
+                # Below the mine
+                if row + 1 < len(field) and field[row + 1][col] != 9:
+                    field[row + 1][col] += 1
 
-            # To the left
-            if col - 1 >= 0 and map[row][col - 1].getContents() != 9:
-                map[row][col - 1].incrementContents()
+                # Above the mine
+                if row - 1 >= 0 and field[row - 1][col] != 9:
+                    field[row - 1][col] += 1
 
-            # Down right
-            if row + 1 < map.length and col + 1 < map[row].length and map[row + 1][col + 1].getContents() != 9:
-                map[row + 1][col + 1].incrementContents()
+                # To the left
+                if col - 1 >= 0 and field[row][col - 1] != 9:
+                    field[row][col - 1] += 1
 
-            # Up right
-            if row - 1 >= 0 and col + 1 < map[row].length and map[row - 1][col + 1].getContents() != 9:
-                map[row - 1][col + 1].incrementContents()
+                # Down right
+                if row + 1 < len(field) and col + 1 < len(field[row]) and field[row + 1][col + 1] != 9:
+                    field[row + 1][col + 1] += 1
 
-            # Up left
-            if row - 1 >= 0 and col - 1 >= 0 and map[row - 1][col - 1].getContents() != 9:
-                map[row - 1][col - 1].incrementContents()
+                # Up right
+                if row - 1 >= 0 and col + 1 < len(field[row]) and field[row - 1][col + 1] != 9:
+                    field[row - 1][col + 1] += 1
 
-            # Down left
-            if row + 1 < map.length and col - 1 >= 0 and map[row + 1][col - 1].getContents() != 9:
-                map[row + 1][col - 1].incrementContents()
+                # Up left
+                if row - 1 >= 0 and col - 1 >= 0 and field[row - 1][col - 1] != 9:
+                    field[row - 1][col - 1] += 1
+
+                # Down left
+                if row + 1 < len(field) and col - 1 >= 0 and field[row + 1][col - 1] != 9:
+                    field[row + 1][col - 1] += 1
 
 
-mines()
-print(field)
+# adds mines and the numbers to list: fields
+def create_map():
+    mines()
+    increment_neighbors()
+
+
+create_map()
+for i in range(len(field)):
+    print(field[i])
