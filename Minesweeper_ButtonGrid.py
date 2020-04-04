@@ -10,6 +10,8 @@
 import random
 from tkinter import *
 from Minesweeper_mines import *
+x_cords = 0
+y_cords = 0
 
 
 # everything that goes into the window
@@ -36,13 +38,13 @@ def create_board(board):
 
     # creates the background of the gameboard
     board.create_rectangle(10, 10, 544, 641, outline='gray', fill='darkgray', width=36)
-    board.create_rectangle(10, 590, 545, 460, outline='gray', fill='gray')
+    board.create_rectangle(10, 590, 544, 471, outline='gray', fill='gray')
     board.create_rectangle(27, 525, 525, 480, outline='darkgray', fill='darkgray')
 
 
 def button_grid(window):
 
-    # creates grid of buttons, dim 11x14
+    # creates grid of buttons, dim 11x11
     x = 29
     while x <= 500:
         y = 29
@@ -50,6 +52,16 @@ def button_grid(window):
             button1 = Button(window, width=5, height=2, bg='gray').place(x=x, y=y)
             y = y + 40
         x = x + 45
+
+
+# get coordinates for location in list
+def get_xy(event):
+    global x_cords
+    global y_cords
+
+    x_cords = event.x
+    y_cords = event.y
+    print(x_cords, y_cords)
 
 
 def main():
@@ -64,6 +76,9 @@ def main():
     create_window(window)
     create_board(board)
     button_grid(window)
+
+    # bind left mouse click within shape rectangle
+    board.bind("<Button-1>", get_xy)
 
     window.mainloop()
 
