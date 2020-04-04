@@ -1,6 +1,6 @@
 #
 # for setting up the mines, the numbers around the mines,
-# and to be able to recursively uncover the buttons
+# and to update each list element for the mines it touches
 #
 
 import random as r

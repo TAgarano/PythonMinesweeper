@@ -9,6 +9,7 @@
 
 import random
 from tkinter import *
+from Minesweeper_mines import *
 
 
 # everything that goes into the window
