@@ -36,7 +36,7 @@ def create_board(board):
 
     # creates the background of the gameboard
     board.create_rectangle(10, 10, 544, 641, outline='gray', fill='darkgray', width=36)
-    board.create_rectangle(10, 544, 471, 460, outline='gray', fill='gray')
+    board.create_rectangle(10, 590, 544, 471, outline='gray', fill='gray')
     board.create_rectangle(27, 525, 525, 480, outline='darkgray', fill='darkgray')
 
 
