@@ -10,8 +10,9 @@
 import random
 from tkinter import *
 from Minesweeper_mines import *
-x_cords = 0
-y_cords = 0
+
+button_locations = [[Button for i in range(11)] for j in range(11)]
+print(button_locations)
 
 
 # everything that goes into the window
@@ -49,25 +50,26 @@ def button_grid(window):
     while x <= 500:
         y = 29
         while y <= 460:
-            button1 = Button(window, width=5, height=2, bg='gray').place(x=x, y=y)
+            button1 = Button(window, width=5, height=2, bg='gray', text="", command=clicked(int((x-29)/45), int((y-29)/40))).place(x=x, y=y)
+            button_locations[int((x-29)/45)][int((y-29)/40)] = button1
             y = y + 40
         x = x + 45
 
 
-# get coordinates for location in list
-def get_xy(event):
-    global x_cords
-    global y_cords
-
-    x_cords = event.x
-    y_cords = event.y
-    print(x_cords, y_cords)
+# FIXME: TypeError: configure() missing 1 required positional argument: 'self'
+# FIXME: get text to work
+def clicked(x, y):
+    button = button_locations[x][y]
+    button = button.configure(text=str(field[x][y]))
 
 
 def main():
 
     # creates window
     window = Tk()
+
+    # creates map to be "linked" with buttons
+    create_map()
 
     # creates space for objects to be placed on the window
     board = Canvas(window, width=550, height=700)
@@ -76,9 +78,6 @@ def main():
     create_window(window)
     create_board(board)
     button_grid(window)
-
-    # bind left mouse click within shape rectangle
-    board.bind("<Button-1>", get_xy)
 
     window.mainloop()
 
