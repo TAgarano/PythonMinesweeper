@@ -4,7 +4,7 @@
 #
 
 import random as r
-field = [[0 for i in range(10)] for j in range(10)]
+field = [[0 for i in range(11)] for j in range(11)]
 num_mines = 15
 
 
@@ -14,8 +14,8 @@ def mines():
 
     i = 0
     while i != num_mines:
-        x = r.randint(0, 9)
-        y = r.randint(0, 9)
+        x = r.randint(0, 10)
+        y = r.randint(0, 10)
 
         # place mine
         if field[x][y] != 9:

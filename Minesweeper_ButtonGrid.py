@@ -9,6 +9,7 @@
 
 import random
 from tkinter import *
+from Minesweeper_mines import *
 
 
 # everything that goes into the window
@@ -45,7 +46,7 @@ def button_grid(window):
     x = 29
     while x <= 500:
         y = 29
-        while y <= 550:
+        while y <= 460:
             button1 = Button(window, width=5, height=2, bg='gray').place(x=x, y=y)
             y = y + 40
         x = x + 45
