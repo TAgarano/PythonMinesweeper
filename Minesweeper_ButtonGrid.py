@@ -65,8 +65,7 @@ def button_grid(window):
 # FIXME: TypeError: configure() missing 1 required positional argument: 'self'
 # FIXME: get text to work
 def clicked(x, y):
-    button = button_locations[x][y]
-    button = button.configure(text=str(field[x][y]))
+    button_locations[x][y].config(state=DISABLED)
 
 
 def main():
