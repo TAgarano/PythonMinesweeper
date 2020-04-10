@@ -60,7 +60,7 @@ def button_grid(window):
 
 
 # FIXME: IndexError: list index out of range
-# FIXME: keeps thinking pos: 11, 11.
+# FIXME: keeps thinking pos: 11, 11. Assumes last x and y vals
 def clicked(x, y):
     global button_locations
 
