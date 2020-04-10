@@ -44,14 +44,20 @@ def create_board(board):
 
 
 def button_grid(window):
+    global button_locations
 
-    # creates grid of buttons, dim 11x11
+    # creates grid of buttons & labels, dim 11x11
     x = 29
     while x <= 500:
         y = 29
         while y <= 460:
-            button1 = Button(window, width=5, height=2, bg='gray', text="", command=clicked(int((x-29)/45), int((y-29)/40))).place(x=x, y=y)
+            elements = Label(window, text=field[int((x - 29) / 45)][int((y - 29) / 40)], font="Times 16 bold",
+                             fg="black").place(x=x+3, y=y+3)
+
+            button1 = Button(window, width=5, height=2, bg='gray',
+                             command=clicked(int((x-29)/45), int((y-29)/40))).place(x=x, y=y)
             button_locations[int((x-29)/45)][int((y-29)/40)] = button1
+
             y = y + 40
         x = x + 45
 
