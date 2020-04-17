@@ -15,13 +15,33 @@ button_locations1 = []
 
 
 # everything that goes into the window
-def create_window(window):
+def create_window():
+    # creates window
+    window = Tk()
+
     # titles window Minesweeper
     window.title("Minesweeper")
+
+    frame = Frame(window, background='dark gray')
+
+    frame.pack(side='top', fill='both', expand='true')
 
     # cannot resize window, dim 550x700, starts at 50, 50 on screen
     window.resizable(width=FALSE, height=FALSE)
     window.geometry('554x585+50+50')
+
+    return window, frame
+
+
+def create_board(window):
+    # creates space for objects to be placed on the window
+    board = Canvas(window, width=550, height=700)
+    board.pack()
+
+    # creates the background of the gameboard
+    board.create_rectangle(10, 10, 544, 641, outline='gray', fill='darkgray', width=36)
+    board.create_rectangle(10, 590, 544, 471, outline='gray', fill='gray')
+    board.create_rectangle(27, 525, 525, 480, outline='darkgray', fill='darkgray')
 
     # place and create buttons
     practice_btn = Button(window, text="Practice", width=25, height=2).place(x=1, y=550)
@@ -33,37 +53,19 @@ def create_window(window):
     active_lives = Label(window, text="0", font="Times 16 bold", bg="darkgray").place(x=87, y=490)
 
 
-def create_board(board):
-    # creates the background of the gameboard
-    board.create_rectangle(10, 10, 544, 641, outline='gray', fill='darkgray', width=36)
-    board.create_rectangle(10, 590, 544, 471, outline='gray', fill='gray')
-    board.create_rectangle(27, 525, 525, 480, outline='darkgray', fill='darkgray')
+def button_grid(frame):
+    frame.grid_rowconfigure(1, weight=1)
+    frame.grid_columnconfigure(1, weight=1)
 
+    column = 0
 
-def button_grid(window):
-#    global button_locations0
-    global button_locations1
-
-    # creates grid of buttons & labels, dim 11x11
-    x = 29
-    while x < 500:
-        y = 29
-        while y < 450:
-            elements = Label(window, text=field[int((x - 29) / 45)][int((y - 29) / 40)], font="Times 16 bold",
-                             fg="black", bg="darkgray").place(x=x + 13, y=y + 5)
-
-            button = Button(window, width=5, height=2, bg='gray',  command=lambda: clicked(button))
-
-            # FIXME: Tried 2 ways of adding button to a list
-#            button_locations0[int((x - 29) / 45)][int((y - 29) / 40)] = button
-            button_locations1.append(button)
-            button.place(x=x, y=y)
-            y = y + 40
-        x = x + 45
-    # FIXME: Last position of x & y are passed in for function "clicked"
-    # FIXME: can test with below values
-    # y = 0
-    # x = 0
+    while column < 11:
+        row = 0
+        while row < 11:
+            button = Button(frame, width=5, height=2, bg='gray')
+            button.grid(row=row, column=column)
+            row += 1
+        column += 1
 
 
 # TODO: hide button || change button text
@@ -74,18 +76,13 @@ def clicked(event):
 
 def main():
     # creates window
-    window = Tk()
+    window, frame = create_window()
 
     # creates map to be "linked" with buttons
     create_map()
 
-    # creates space for objects to be placed on the window
-    board = Canvas(window, width=550, height=700)
-    board.pack()
-
-    create_window(window)
-    create_board(board)
-    button_grid(window)
+    create_board(window)
+    button_grid(frame)
 
     window.mainloop()
 
