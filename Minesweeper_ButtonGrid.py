@@ -7,11 +7,11 @@
 # Created by: Travis A, Andrew H, Matthew P
 #
 
-import random
 from tkinter import *
 from Minesweeper_mines import *
 
-button_locations = [[Button for i in range(11)] for j in range(11)]
+# button_locations0 = [[Button for i in range(11)] for j in range(11)]
+button_locations1 = []
 
 
 # everything that goes into the window
@@ -41,30 +41,35 @@ def create_board(board):
 
 
 def button_grid(window):
-    global button_locations
+#    global button_locations0
+    global button_locations1
 
     # creates grid of buttons & labels, dim 11x11
     x = 29
-    while x <= 500:
+    while x < 500:
         y = 29
-        while y <= 460:
+        while y < 450:
             elements = Label(window, text=field[int((x - 29) / 45)][int((y - 29) / 40)], font="Times 16 bold",
                              fg="black", bg="darkgray").place(x=x + 13, y=y + 5)
 
-            button_locations[int((x - 29) / 45)][int((y - 29) / 40)] = Button(window, width=5, height=2, bg='gray',
-                                                                              command=lambda: clicked(
-                                                                                  int((x - 29) / 45),
-                                                                                  int((y - 29) / 40))).place(x=x, y=y)
+            button = Button(window, width=5, height=2, bg='gray',  command=lambda: clicked(button))
+
+            # FIXME: Tried 2 ways of adding button to a list
+#            button_locations0[int((x - 29) / 45)][int((y - 29) / 40)] = button
+            button_locations1.append(button)
+            button.place(x=x, y=y)
             y = y + 40
         x = x + 45
+    # FIXME: Last position of x & y are passed in for function "clicked"
+    # FIXME: can test with below values
+    # y = 0
+    # x = 0
 
 
-# FIXME: IndexError: list index out of range
-# FIXME: keeps thinking pos: 11, 11. Assumes last x and y vals
-def clicked(x, y):
-    global button_locations
-
-    button_locations[x][y].config(state=DISABLED)
+# TODO: hide button || change button text
+def clicked(event):
+    x = button_locations1.index(event)
+    button_locations1[x].place_forget()
 
 
 def main():
