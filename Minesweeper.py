@@ -10,10 +10,8 @@
 from tkinter import *
 from Minesweeper_mines import *
 
-# button_locations0 = [[Button for i in range(11)] for j in range(11)]
+# list of buttons
 button_locations = []
-
-button_ids = []
 
 
 # everything that goes into the window
@@ -52,9 +50,10 @@ def create_board(window):
 
 
 def button_grid(window):
-    # global button_locations
+    # list of buttons
     global button_locations
 
+    # button id
     id = 0
 
     # creates grid of buttons & labels, dim 11x11
@@ -65,8 +64,7 @@ def button_grid(window):
             elements = Label(window, text=field[int((x - 29) / 45)][int((y - 29) / 40)], font="Times 16 bold",
                              fg="black", bg="darkgray").place(x=x + 13, y=y + 5)
 
-            button = Button(window, width=5, height=2, bg='gray',
-                            command=lambda c=str(id): clicked(c))
+            button = Button(window, width=5, height=2, bg='gray', command=lambda c=str(id): clicked(c))
 
             button_locations.append(button)
             button.place(x=x, y=y)
