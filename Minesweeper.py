@@ -83,7 +83,7 @@ def increment_neighbors():
                     field[row + 1][col - 1] += 1
 
 
-# text based map
+# text based map for testing
 def print_map():
     for i in range(len(field)):
         print(field[i])
@@ -94,6 +94,7 @@ def print_map():
 def create_map():
     mines()
     increment_neighbors()
+    print_map()
 
 
 # everything that goes into the window
