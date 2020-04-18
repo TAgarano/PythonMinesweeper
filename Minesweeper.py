@@ -195,6 +195,7 @@ def clicked(index):
             and button_locations[int(index) - 10]["state"] == NORMAL:
         clicked(int(index) - 10)
 
+
 def main():
     # creates window
     window = create_window()
