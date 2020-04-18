@@ -14,7 +14,7 @@ import random as r
 from tkinter import *
 
 #
-# globals
+# GLOBALS
 #
 # list of buttons
 button_locations = []
@@ -39,9 +39,6 @@ def mines():
         if field[x][y] != 9:
             field[x][y] = 9
             i += 1
-    for i in range(len(field)):
-        print(field[i])
-    print()
 
 
 # increment numbers around mines
@@ -84,6 +81,13 @@ def increment_neighbors():
                 # Down left
                 if row + 1 < len(field) and col - 1 >= 0 and field[row + 1][col - 1] != 9:
                     field[row + 1][col - 1] += 1
+
+
+# text based map
+def print_map():
+    for i in range(len(field)):
+        print(field[i])
+    print()
 
 
 # adds mines and the numbers to list: fields
@@ -138,8 +142,9 @@ def button_grid(window):
     x = 29
     while x < 500:
         y = 29
+        print(field[int((x - 29) / 45)])
         while y < 450:
-            elements = Label(window, text=field[int((x - 29) / 45)][int((y - 29) / 40)], font="Times 16 bold",
+            elements = Label(window, text=field[int((y - 29) / 40)][int((x - 29) / 45)], font="Times 16 bold",
                              fg="black", bg="darkgray").place(x=x + 13, y=y + 5)
 
             button = Button(window, width=5, height=2, bg='gray', command=lambda c=str(id): clicked(c))
@@ -200,9 +205,9 @@ def main():
     # creates window
     window = create_window()
 
-    # creates map to be "linked" with buttons
     create_map()
 
+    # creates map to be "linked" with buttons
     create_board(window)
     button_grid(window)
 
