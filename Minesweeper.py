@@ -1,3 +1,4 @@
+#
 # Minesweeper with 3 levels
 # Practice: allows you to clear board without ending on a mine
 # Intermediate: gives you 3 lives to clear the board
@@ -267,6 +268,7 @@ class Commands(object):
             for i in range(len(button_locations)):
                 button_locations[i]['state'] = DISABLED
 
+                
 def main():
     global window
 
