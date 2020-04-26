@@ -23,6 +23,7 @@ start_buttons = []
 window = Tk()
 
 
+# class that handles all mine operations
 class Mines(object):
     # list for the map
     field = [[0 for i in range(11)] for j in range(11)]
@@ -94,6 +95,7 @@ class Mines(object):
         Mines.print_map(self)
 
 
+# class that handles the window
 class Window(object):
 
     # everything that goes into the window
@@ -121,61 +123,63 @@ class Window(object):
 
         # place and create buttons
         practice_btn = Button(win, text="Practice", width=25, height=2,
-                              command=lambda m=str(300): c.practice(m))
+                              command=lambda: c.practice())
         start_buttons.append(practice_btn)
         practice_btn.place(x=1, y=550)
 
         intermediate_btn = Button(win, text="Intermediate", width=25, height=2,
-                                  command=lambda m=str(301): c.intermediate(m))
+                                  command=lambda: c.intermediate())
         start_buttons.append(intermediate_btn)
         intermediate_btn.place(x=185, y=550)
 
-        hard_btn = Button(win, text="Hard", width=25, height=2, command=lambda m=str(302): c.hard(m))
+        hard_btn = Button(win, text="Hard", width=25, height=2, command=lambda: c.hard())
         start_buttons.append(hard_btn)
         hard_btn.place(x=369, y=550)
 
         # lives label
         lives_lbl = Label(win, text="Lives: ", font="Times 16 bold", bg="darkgray").place(x=28, y=490)
 
+    def button_grid(self, win):
+        # list of buttons
+        global button_locations
+        com = Commands()
 
-def button_grid(win):
-    # list of buttons
-    global button_locations
-    com = Commands()
+        # button id
+        id = 0
 
-    # button id
-    id = 0
-
-    # creates grid of buttons & labels, dim 11x11
-    x = 29
-    while x < 500:
-        y = 29
-        print(Mines.field[int((x - 29) / 45)])
-        while y < 450:
-            if Mines.field[int((y - 29) / 40)][int((x - 29) / 45)] == 9:
-                elements = Label(win, text="*", font="Times 16 bold",
+        # creates grid of buttons & labels, dim 11x11
+        x = 29
+        while x < 500:
+            y = 29
+            print(Mines.field[int((x - 29) / 45)])
+            while y < 450:
+                if Mines.field[int((y - 29) / 40)][int((x - 29) / 45)] == 9:
+                    elements = Label(win, text="*", font="Times 16 bold",
                                  fg="black", bg="darkgray").place(x=x + 13, y=y + 11)
-            else:
-                elements = Label(win, text=Mines.field[int((y - 29) / 40)][int((x - 29) / 45)], font="Times 16 bold",
-                                 fg="black", bg="darkgray").place(x=x + 13, y=y + 5)
+                else:
+                    elements = Label(win, text=Mines.field[int((y - 29) / 40)][int((x - 29) / 45)],
+                                     font="Times 16 bold", fg="black", bg="darkgray").place(x=x + 13, y=y + 5)
 
-            button = Button(win, width=5, height=2, bg='gray', command=lambda c=str(id): com.clicked(c))
+                button = Button(win, width=5, height=2, bg='gray', command=lambda c=str(id): com.clicked(c))
 
-            button_locations.append(button)
-            button.place(x=x, y=y)
-            id += 1
-            y = y + 40
-        x = x + 45
+                button_locations.append(button)
+                button.place(x=x, y=y)
+                id += 1
+                y = y + 40
+            x = x + 45
 
 
+# class for all commands inside of buttons
 class Commands(object):
     spaces = 121 - Mines.num_mines
-    active_lives = Label(window)
+    live_count = 0
 
+    # when a button is clicked
     def clicked(self, index):
         button_locations[int(index)]["state"] = DISABLED
         button_locations[int(index)].place_forget()
 
+        Commands.check_mine(self, index)
         Commands.remove_space(self)
         # Button above
         if (int(index) - 1) % 11 <= 9 and int(index) - 1 < 121 and\
@@ -222,40 +226,52 @@ class Commands(object):
                 and button_locations[int(index) - 10]["state"] == NORMAL:
             Commands.clicked(self, int(index) - 10)
 
-    def practice(self, idx):
+    # for practice button, locks other buttons after press
+    def practice(self):
+        win = Window()
         mine_c = Mines()
         mine_c.create_map()
 
-        Commands.active_lives = Label(window, text="99", font="Times 16 bold", bg="darkgray").place(x=88, y=490)
+        active_label = Label(window, text="99", font="Times 16 bold", bg="darkgray")
+        Commands.live_count = int(active_label['text'])
+        active_label.place(x=88, y=490)
 
         # creates map to be "linked" with buttons
-        button_grid(window)
+        win.button_grid(window)
 
         # disables other start buttons
         for i in range(len(start_buttons)):
             start_buttons[i]['state'] = DISABLED
 
-    def intermediate(self, idx):
+    # for practice button
+    def intermediate(self):
+        win = Window()
         mine_c = Mines()
         mine_c.create_map()
 
-        Commands.active_lives = Label(window, text="3", font="Times 16 bold", bg="darkgray").place(x=88, y=490)
+        active_label = Label(window, text="3", font="Times 16 bold", bg="darkgray")
+        Commands.live_count = int(active_label['text'])
+        active_label.place(x=88, y=490)
 
         # creates map to be "linked" with buttons
-        button_grid(window)
+        win.button_grid(window)
 
         # disables other start buttons
         for i in range(len(start_buttons)):
             start_buttons[i]['state'] = DISABLED
 
-    def hard(self, idx):
+    # for practice button
+    def hard(self):
+        win = Window()
         mine_c = Mines()
         mine_c.create_map()
 
-        Commands.active_lives = Label(window, text="1", font="Times 16 bold", bg="darkgray").place(x=88, y=490)
+        active_label = Label(window, text="1", font="Times 16 bold", bg="darkgray")
+        Commands.live_count = int(active_label['text'])
+        active_label.place(x=88, y=490)
 
         # creates map to be "linked" with buttons
-        button_grid(window)
+        win.button_grid(window)
 
         # disables other start buttons
         for i in range(len(start_buttons)):
@@ -267,8 +283,26 @@ class Commands(object):
         if Commands.spaces == 0:
             for i in range(len(button_locations)):
                 button_locations[i]['state'] = DISABLED
+            end_game = Label(window, text="You Win! :)", font="Times 16 bold", bg="darkgray").place(x=130, y=490)
 
-                
+    def check_mine(self, idx):
+        if Mines.field[int(idx) % 11][int(int(idx) / 11)] == 9:
+            Commands.live_count -= 1
+            Commands.spaces += 1
+
+            if Commands.live_count == 0:
+                for i in range(len(button_locations)):
+                    button_locations[i]['state'] = DISABLED
+                end_game = Label(window, text="You Lose :(", font="Times 16 bold", bg="darkgray").place(x=130, y=490)
+                active_label = Label(window, text=Commands.live_count, font="Times 16 bold",
+                                     bg="darkgray").place(x=88, y=490)
+
+            else:
+                active_label = Label(window, text=Commands.live_count, font="Times 16 bold",
+                                     bg="darkgray").place(x=88, y=490)
+                print(Commands.live_count)
+
+
 def main():
     global window
 
