@@ -243,7 +243,7 @@ class Commands(object):
         for i in range(len(start_buttons)):
             start_buttons[i]['state'] = DISABLED
 
-    # for practice button
+    # for intermediate button, locks other buttons after press
     def intermediate(self):
         win = Window()
         mine_c = Mines()
@@ -260,7 +260,7 @@ class Commands(object):
         for i in range(len(start_buttons)):
             start_buttons[i]['state'] = DISABLED
 
-    # for practice button
+    # for hard button, locks other buttons after press
     def hard(self):
         win = Window()
         mine_c = Mines()
@@ -277,6 +277,8 @@ class Commands(object):
         for i in range(len(start_buttons)):
             start_buttons[i]['state'] = DISABLED
 
+    # checks if all the non-mine spaces have been cleared
+    # displays a message if the player wins the game
     def remove_space(self):
         Commands.spaces -= 1
 
@@ -285,6 +287,8 @@ class Commands(object):
                 button_locations[i]['state'] = DISABLED
             end_game = Label(window, text="You Win! :)", font="Times 16 bold", bg="darkgray").place(x=130, y=490)
 
+    # checks if the player clicked on a mine and removes a life if they have
+    # ends game if player runs out of lives
     def check_mine(self, idx):
         if Mines.field[int(idx) % 11][int(int(idx) / 11)] == 9:
             Commands.live_count -= 1
@@ -300,7 +304,6 @@ class Commands(object):
             else:
                 active_label = Label(window, text=Commands.live_count, font="Times 16 bold",
                                      bg="darkgray").place(x=88, y=490)
-                print(Commands.live_count)
 
 
 def main():
